@@ -13,9 +13,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+//TODO rework in Java7 - better IO, better Exception handling. Some syntactic sugar -> learn Java 7 this way
 /**
  *
  * @author Leni Kirilov
+ * //TODO understand how to set last changed date automatically to each changed file
  */
 public class DirectoryNode extends FileSystemNode {
 
@@ -23,14 +25,13 @@ public class DirectoryNode extends FileSystemNode {
     public List<FileSystemNode> children = new ArrayList<FileSystemNode>();
 
     public DirectoryNode(File dirPath) {
-        validateInput(dirPath);
+        buildFromPath(dirPath);
     }
 
     public DirectoryNode(String inputXML) {
         try {
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(inputXML));
+            InputSource is = new InputSource(new StringReader(inputXML));
             Document document = db.parse(is);
             if (!document.getDocumentElement().getNodeName().equals(DIRECTORY_NODE)) {
                 throw new IllegalArgumentException("A DirectoryNode xml should be the only root element."
@@ -68,6 +69,7 @@ public class DirectoryNode extends FileSystemNode {
                     } else if (currentElement.getNodeName().equals(FILENODE)) {
                         children.add(new FileNode(currentElement));
 
+                        //TODO should I not remove this one here as the XML is already validated with the XSD ? If I have good tests, I can check this quickly
                     } else {
                         throw new IllegalArgumentException("Unknown element found. Only " + FILENODE + " and " + DIRECTORY_NODE + " expected");
                     }
@@ -78,7 +80,7 @@ public class DirectoryNode extends FileSystemNode {
         }
     }
 
-    private void validateInput(File dir) {
+    private void buildFromPath(File dir) {
         if (dir.exists() && dir.isDirectory()) {
             this.name = dir.getName();
 
@@ -158,6 +160,7 @@ public class DirectoryNode extends FileSystemNode {
     public List<FileSystemNode> getChildren() {
         return children;
     }
+    //TODO check if the following code has an equivalent test. If yes - delete this commented code. If not - write test and then delete it! :)
 //    public static void main(String[] args) throws Exception {
 //        String STANDARD_FILE_NODE = "<FileNode Name=\"NewFile.xml\" Size=\"256\" LastDateChanged=\"2010-12-12T06:38:55\"/>";
 //        String EMPTY_DIRECTORY_NODE = "<DirectoryNode Name=\"EmptyDir\" />";

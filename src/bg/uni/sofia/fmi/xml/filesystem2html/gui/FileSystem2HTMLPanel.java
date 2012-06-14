@@ -3,7 +3,6 @@ package bg.uni.sofia.fmi.xml.filesystem2html.gui;
 import bg.uni.sofia.fmi.xml.filesystem2html.FileUtils;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.DirectoryNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileNode;
-import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.XmlTools;
 import java.io.File;
 import java.io.IOException;
@@ -23,8 +22,11 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private final File SCHEMA_FILE;
 
     public FileSystem2HTMLPanel() {
+        //TODO improve Swing according to Swing best practises, so that Hanging of GUI because of calculations is fixed
+        //TODO redo the Swing with code (may be never?)
         initComponents();
         setEnableButtons(false, false);
+        //TODO this XSD is known here, but the XSL is known in the XmlTools class. To be consistent, I should include them both in the XmlTools
         SCHEMA_FILE = FileUtils.locateResource("xml/FileSystem.xsd");
     }
 
@@ -181,7 +183,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private void createHtmlForXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHtmlForXmlActionPerformed
         try {
             xmlFile = choosePath("Choose xml input", JFileChooser.FILES_ONLY);
-            XmlTools.validateWithJAVAX(xmlFile, SCHEMA_FILE);
+            XmlTools.validateWithJavax(xmlFile, SCHEMA_FILE);
             htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
             htmlFile = addSuffix(".html", htmlFile);
 
@@ -205,12 +207,13 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             htmlFile = addSuffix(".html", htmlFile);
 
             Element resultXml = createFileSystemXML(path);
+            
+            //TODO overload convertFileSystemXml2HTML to work not only with XmlFile paths but the XML as well. This way we can skip 2 steps: writing to HDD and then reading from it
             xmlFile = new File("temp.xml");
             xmlFile.deleteOnExit();
-
             XmlTools.xmlToFile(resultXml, xmlFile);
             XmlTools.convertFileSystemXml2HTML(xmlFile, htmlFile);
-
+            
             setTextToLabels();
             setEnableButtons(true, true);
 
@@ -234,9 +237,13 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             path = choosePath("Choose path...", JFileChooser.DIRECTORIES_ONLY);
             htmlFile = null;
 
-            XmlTools.validateWithJAVAX(xmlFile, SCHEMA_FILE);
+            XmlTools.validateWithJavax(xmlFile, SCHEMA_FILE);
             String xmlString = FileUtils.readFileAsString(xmlFile);
 
+            //TODO rework following so that I don't have to do copy-paste. I need something like factory.
+            //TODO improve error handling and branching. Don't use exception instead of IF-else mechanism
+            
+            //UGLY CODE MADA FAKA
             try {
                 new DirectoryNode(xmlString).create(path.getAbsolutePath());
                 setTextToLabels();
@@ -275,6 +282,10 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         return new File(path);
     }
 
+    /**
+     * This is done so that the resulting html can easily refer the images with simple relative path.
+     * //TODO think of a better way to do this relative pointings
+     */
     private void copyImageFiles() {
         String resultHtmlFolder = getDirectory(htmlFile);
         FileUtils.copyFile(FileUtils.locateResource("images/file.jpeg"), new File(resultHtmlFolder + "file.jpeg"));
@@ -314,6 +325,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     }
 
     private File choosePath(String text, int chooseMode) throws IllegalArgumentException {
+        //TODO set default folder the previously opened
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(chooseMode);
 
@@ -326,13 +338,14 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         }
     }
 
+    //TODO redo FileNode and DirectoryNode implementations with JAX-B annotations
     private Element createFileSystemXML(File path) {
         if (path.isFile()) {
             return new FileNode(path).toXML();
         } else if (path.isDirectory()) {
             return new DirectoryNode(path).toXML();
         } else {
-            throw new RuntimeException("invalid file chosen");
+            throw new RuntimeException("Invalid file chosen");
         }
     }
 

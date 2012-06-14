@@ -48,10 +48,9 @@ public class FileNode extends FileSystemNode {
 
     public FileNode(String xml) {
         try {
-            DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-            InputSource is = new InputSource();
-            is.setCharacterStream(new StringReader(xml));
-            Document document = db.parse(is);
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            InputSource is = new InputSource(new StringReader(xml));
+            Document document = builder.parse(is);
 
             if (!document.getDocumentElement().getNodeName().equals(FILENODE)) {
                 throw new IllegalArgumentException("A FileNode xml should have only 1 FileNode element. "
@@ -96,7 +95,7 @@ public class FileNode extends FileSystemNode {
 
     private void parseLastDateChanged(Element fileNodeElement) throws ParseException {
         String dateRaw = fileNodeElement.getAttribute(LAST_DATE_CHANGED);
-        Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateRaw);
+        Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateRaw);//TODO the locale here is probably not going to work elsewhere... to be checked in other Locale. Create test!
         this.lastDateChanged = date.getTime();
     }
 

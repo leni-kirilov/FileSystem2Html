@@ -2,7 +2,6 @@ package bg.uni.sofia.fmi.xml.filesystem2html;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.StringWriter;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
@@ -36,7 +35,7 @@ public class XmlTools {
         }
     }
 
-    public static void validateWithJAVAX(File inputXML, File schemaXSD) {
+    public static void validateWithJavax(File inputXML, File schemaXSD) {
         try {
             String schemaLang = "http://www.w3.org/2001/XMLSchema";
             SchemaFactory factory = SchemaFactory.newInstance(schemaLang);

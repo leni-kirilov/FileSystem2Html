@@ -35,6 +35,7 @@ public class FileUtils {
         }
     }
 
+    //TODO search of a better IO library to include in the project.
     public static void copyFile(File sourceFile, File destinationFile) {
         try {
             InputStream in = new FileInputStream(sourceFile);
@@ -76,6 +77,7 @@ public class FileUtils {
         }
         reader.close();
 
+        //TODO why have I included this hack here? Can I not skip this replace at all?
         return fileData.toString().replace("\n</FileSystemTree>", "");
     }
 }

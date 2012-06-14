@@ -102,6 +102,7 @@ public class DirectoryNodesTest {
 //            assertEquals(true, output.Contains(inputXML), "/n" + output + "/n" + inputXML);
 //        }
     @Test(expected = DirectoriesApplicationException.class)
+    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void testInputXML_Negative_FileNodeInput() {
         String xmlInput = STANDARD_FILE_NODE;
         new DirectoryNode(xmlInput);
