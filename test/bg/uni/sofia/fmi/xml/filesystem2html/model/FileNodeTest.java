@@ -5,6 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 //TODO make the tests working again!
+//TODO convert project to Java7. Use Java7 features
 
 /**
  *
