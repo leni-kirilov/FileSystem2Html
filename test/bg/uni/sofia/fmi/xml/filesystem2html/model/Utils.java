@@ -17,12 +17,26 @@ public class Utils {
      * @throws IOException 
      */
     public static File createTestFile(String fileName) throws IOException {
-        String tempDirPath = System.getProperty("java.io.tmpdir");
+        String tempDirPath = getTempDir().getAbsolutePath();
         File testFile = new File(tempDirPath, fileName);
-        testFile.createNewFile();
         testFile.deleteOnExit();
+        Assert.assertTrue("File was not created successfully", testFile.createNewFile());
         
-        Assert.assertTrue(testFile.isFile());
         return testFile;
+    }
+
+    public static File createTestDir(String dirName) throws IOException {
+        String tempDirPath = getTempDir().getAbsolutePath();
+        File testDir = new File(tempDirPath, dirName);
+        testDir.deleteOnExit();
+        Assert.assertTrue("Directory was not created successfully", testDir.mkdirs());
+
+        return testDir;
+    }
+
+    // Private methods
+    private static File getTempDir() {
+        String tempDirPath = System.getProperty("java.io.tmpdir");
+        return new File(tempDirPath);
     }
 }

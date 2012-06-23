@@ -1,50 +1,49 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
 import java.io.File;
+import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
 
-//TODO make the tests working again!
 //TODO convert project to Java7. Use Java7 features
-
 /**
  *
+ * Tests the basic functions of a FileNode
+ * - parsing File from file system
+ * - parsing XML
+ * - creating a File
+ * - correct behaviour with invalid input
+ * 
  * @author Leni Kirilov
  */
 public class FileNodeTest {
 
-    public static String STANDARD_FILE_NODE = "<FileNode Name=\"NewFile.xml\" Size=\"256\" "
-            + "LastDateChanged=\"2010-12-12T06:38:55\" "
-            + "Hidden=\"true\" Readable=\"true\" Writable=\"true\" Executable=\"true\" />";
 
     @Test
-    public void testCreation_Positive() {
-        //TODO fix tests to be executable everywhere! No absolute paths. Only relative ones
-        String realPath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer/NodesHelper.cs";
-        FileNode file = new FileNode(new File(realPath));
+    public void parsing_Positive_SourceSingleFile() throws IOException {
+        File testFile = Utils.createTestFile("file_parsing_Positive_SourceSingleFile.txt");
 
-        assertEquals("NodesHelper.cs", file.getName());
+        FileNode file = new FileNode(testFile);
+
+        assertEquals(testFile.getName(), file.getName());
     }
 
-    public void testCreation_Negative_DoesNotExist() {
-        String unrealPath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer/NodesHelper.csssss";
+    public void parsing_Negative_DoesNotExist() throws IOException {
+        File testDir = Utils.createTestDir("test_dir_parsing_Negative_DoesNotExist");
+        String unrealPath = testDir.getAbsolutePath() + "Inexistent_File.txt";
+
         new FileNode(new File(unrealPath));
     }
 
     @Test(expected = DirectoriesApplicationException.class)
-    public void testCreation_Negative_IsNotFile() {
-        String unrealPath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer/";
-        new FileNode(new File(unrealPath));
+    public void parsing_Negative_IsNotFile() throws IOException {
+        File testDir = Utils.createTestDir("test_dir_parsing_Negative_IsNotFile");
+        new FileNode(testDir);
     }
 
-//    @Test
-//    public void testCorrectXMLOutput() {
-//        String xmlInput = "<FileNode Name=\"NewFile.xml\" Size=\"256\" LastDateChanged=\"2010-12-12T06:38:55\" />";
-//        String output = new FileNode(xmlInput).toXML();
-//        assertEquals(true, output.Contains(xmlInput), "/n" + output + "/n" + xmlInput);
-//    }
     @Test
-    public void testCorrectXMLInput() {
+    public void parsing_Positive_CorrectXMLInput() {
         FileNode file = new FileNode(STANDARD_FILE_NODE);
 
         assertEquals("NewFile.xml", file.getName());
@@ -56,7 +55,7 @@ public class FileNodeTest {
     }
 
     @Test(expected = DirectoriesApplicationException.class)
-    public void testIncorrectXMLInput_DirectoryNodeXML() {
+    public void parsing_Negative_DirectoryNodeXML() {
         String inputXML = "<DirectoryNode Name=\"WithFile\">"
                 + STANDARD_FILE_NODE
                 + "</DirectoryNode>";
@@ -64,25 +63,34 @@ public class FileNodeTest {
     }
 
     @Test
-    public void testCreateFileNodeFromFileNodeToXML() {
+    public void parsing_SourceFileNodeXml() {
         String xmlInput = "<FileNode Name=\"NewFile.xml\" Size=\"256\" LastDateChanged=\"2010-12-12T06:38:55\"/>";
         FileNode file = new FileNode(xmlInput);
-        new FileNode(file.toXML());
+
+        FileNode fileFromFileNode = new FileNode(file.toXML());
+
+        assertEquals(file.getName(), fileFromFileNode.getName());
+        assertEquals(file.getSize(), fileFromFileNode.getSize());
+        assertEquals(file.isHidden(), fileFromFileNode.isHidden());
+        assertEquals(file.isReadable(), fileFromFileNode.isReadable());
+        assertEquals(file.isWritable(), fileFromFileNode.isWritable());
+        assertEquals(file.isExecutable(), fileFromFileNode.isExecutable());
     }
 
     @Test
-    public void testCreate_Positive() {
-        String currentDir = "c:/";
+    public void creating_Positive() throws IOException {
+        File currentDir = Utils.createTestDir("test_dir_creating_Positive");
         try {
-            new FileNode(STANDARD_FILE_NODE).create(currentDir);
+            new FileNode(STANDARD_FILE_NODE).create(currentDir.getAbsolutePath());
         } catch (Exception e) {
         } finally {
-            new File(currentDir + File.separator + "NewFile.xml").delete();
+            File newFile = new File(currentDir + File.separator + "NewFile.xml");
+            assertTrue("File couldn't be deleted.", newFile.delete());
         }
     }
 
     @Test(expected = DirectoriesApplicationException.class)
-    public void testCreation_Negative_TwoFileNodes() {
+    public void parsing_Negative_TwoFileNodesXml() {
         String xmlInput = STANDARD_FILE_NODE + STANDARD_FILE_NODE;
         new FileNode(xmlInput);
     }

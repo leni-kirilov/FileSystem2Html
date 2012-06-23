@@ -1,49 +1,51 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
 import java.io.File;
+import java.io.IOException;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static bg.uni.sofia.fmi.xml.filesystem2html.model.FileNodeTest.STANDARD_FILE_NODE;
+import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
 
 /**
  *
+ * Tests the basic functions of a DirectoryNode
+ * - parsing a Directory from file system
+ * - parsing XML
+ * - creating a Directory
+ * - correct behaviour with invalid input
+ * 
  * @author Leni Kirilov
  */
 public class DirectoryNodesTest {
 
-    private final static String EMPTY_DIRECTORY_NODE = "<DirectoryNode Name=\"EmptyDir\" />";
-    private final static String STANDARD_DIRECTORY_NODE = "<DirectoryNode Name=\"WithFile\">"
-            + EMPTY_DIRECTORY_NODE
-            + STANDARD_FILE_NODE
-            + "</DirectoryNode>";
-
     @Test
-    public void testCreation_Positive() {
-        String realPath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer/";
-        new DirectoryNode(new File(realPath));
+    public void parsing_Positive_EmptyDir() throws IOException {
+        String realDirPath = Utils.createTestDir("test_dir_parsing_Positive_SourceSingleDir").getAbsolutePath();
+        new DirectoryNode(new File(realDirPath));
     }
 
     @Test(expected = DirectoriesApplicationException.class)
-    public void testCreation_Negative_DoesNotExist() {
-        String realPath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer_I_AM_AN_UNEXISTING_DIRECTORY/";
-        new DirectoryNode(new File(realPath));
+    public void parsing_Negative_DirDoesNotExist() throws IOException {
+        String realDirPath = Utils.createTestDir("test_dir_testCreation_Negative_DoesNotExist").getAbsolutePath();
+        String fakeDirPath = realDirPath + "\\Inexistent_Dir\\";
+        new DirectoryNode(new File(fakeDirPath));
     }
 
     @Test(expected = DirectoriesApplicationException.class)
-    public void testCreation_Negative_IsNotDirectory() {
-        String realFilePath = "D:/Coding/DOT NET Projects/Projects/WPFHomeWorks/FileTree2XMLVisualizer/NodesHelper.cs";
+    public void parsing_Negative_IsNotDirectory() throws IOException {
+        String realFilePath = Utils.createTestFile("file_testCreation_Negative_IsNotDirectory.txt").getAbsolutePath();
         new DirectoryNode(new File(realFilePath));
     }
 
     @Test
-    public void testInputXML_EmptyDir() {
+    public void parsingXML_Positive_EmptyDir() {
         DirectoryNode dir = new DirectoryNode(EMPTY_DIRECTORY_NODE);
         assertEquals(0, dir.getChildren().size());
         assertEquals("EmptyDir", dir.getName());
     }
 
     @Test
-    public void testInputXML_WithDir() {
+    public void parsingXML_Positive_NestedDirs() {
         String inputXML = "<DirectoryNode Name=\"WithDir\">"
                 + EMPTY_DIRECTORY_NODE
                 + "</DirectoryNode>";
@@ -58,7 +60,7 @@ public class DirectoryNodesTest {
     }
 
     @Test
-    public void testInputXML_WithFile() {
+    public void parsingXML_Positive_DirWithFile() {
         String inputXML = "<DirectoryNode Name=\"WithFile\">"
                 + STANDARD_FILE_NODE
                 + "</DirectoryNode>";
@@ -66,13 +68,14 @@ public class DirectoryNodesTest {
 
         assertEquals(1, dir.getChildren().size());
         FileNode innerFile = (FileNode) dir.getChildren().get(0);
+
         assertEquals("NewFile.xml", innerFile.getName());
         assertEquals(256, innerFile.getSize());
         assertEquals("WithFile", dir.getName());
     }
 
     @Test
-    public void testInputXML_WithFileAndWithDir() {
+    public void parsingXML_Positive_WithFileAndWithDir() {
         String inputXML = "<DirectoryNode Name=\"WithFile\">"
                 + EMPTY_DIRECTORY_NODE
                 + STANDARD_FILE_NODE
@@ -103,13 +106,13 @@ public class DirectoryNodesTest {
 //        }
     @Test(expected = DirectoriesApplicationException.class)
     @SuppressWarnings("ResultOfObjectAllocationIgnored")
-    public void testInputXML_Negative_FileNodeInput() {
+    public void parsingXML_Negative_IsNotDir() {
         String xmlInput = STANDARD_FILE_NODE;
         new DirectoryNode(xmlInput);
     }
 
     @Test
-    public void testCreateDirectoryNodeFromDirectoryNodeToXML() {
+    public void parsingXML_Positive_ToXML() {
         String inputXML = "<DirectoryNode Name=\"WithFile\">"
                 + EMPTY_DIRECTORY_NODE
                 + STANDARD_FILE_NODE
@@ -126,4 +129,7 @@ public class DirectoryNodesTest {
 
         assertEquals("WithFile", dir.getName());
     }
+    
+    //TODO add create dir tests, dir + file, dir in dir
+    //TODO parsing file system dir + file, dir in dir
 }
