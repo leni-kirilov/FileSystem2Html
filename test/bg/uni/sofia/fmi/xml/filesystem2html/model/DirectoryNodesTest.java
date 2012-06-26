@@ -1,7 +1,9 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import org.junit.After;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
@@ -18,22 +20,31 @@ import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
  */
 public class DirectoryNodesTest {
 
+    public File dirToClean;
+
+    @After
+    public void cleanUp() throws FileNotFoundException {
+        if (null != dirToClean) {
+            IOUtils.deleteRecursively(dirToClean);
+        }
+    }
+
     @Test
     public void parsing_Positive_EmptyDir() throws IOException {
-        String realDirPath = Utils.createTestDir("test_dir_parsing_Positive_SourceSingleDir").getAbsolutePath();
+        String realDirPath = IOUtils.createTestDir("test_dir_parsing_Positive_SourceSingleDir").getAbsolutePath();
         new DirectoryNode(new File(realDirPath));
     }
 
     @Test(expected = DirectoriesApplicationException.class)
     public void parsing_Negative_DirDoesNotExist() throws IOException {
-        String realDirPath = Utils.createTestDir("test_dir_testCreation_Negative_DoesNotExist").getAbsolutePath();
+        String realDirPath = IOUtils.createTestDir("test_dir_testCreation_Negative_DoesNotExist").getAbsolutePath();
         String fakeDirPath = realDirPath + "\\Inexistent_Dir\\";
         new DirectoryNode(new File(fakeDirPath));
     }
 
     @Test(expected = DirectoriesApplicationException.class)
     public void parsing_Negative_IsNotDirectory() throws IOException {
-        String realFilePath = Utils.createTestFile("file_testCreation_Negative_IsNotDirectory.txt").getAbsolutePath();
+        String realFilePath = IOUtils.createTestFile("file_testCreation_Negative_IsNotDirectory.txt").getAbsolutePath();
         new DirectoryNode(new File(realFilePath));
     }
 
@@ -76,12 +87,10 @@ public class DirectoryNodesTest {
 
     @Test
     public void parsingXML_Positive_WithFileAndWithDir() {
-        String inputXML = "<DirectoryNode Name=\"WithFile\">"
-                + EMPTY_DIRECTORY_NODE
-                + STANDARD_FILE_NODE
-                + "</DirectoryNode>";
+        //Test code
+        DirectoryNode dir = new DirectoryNode(STANDARD_DIRECTORY_NODE);
 
-        DirectoryNode dir = new DirectoryNode(inputXML);
+        //Assert
         assertEquals(2, dir.getChildren().size());
         FileNode innerFile = (FileNode) dir.getChildren().get(1);
         assertEquals("NewFile.xml", innerFile.getName());
@@ -93,19 +102,7 @@ public class DirectoryNodesTest {
         assertEquals("WithFile", dir.getName());
     }
 
-//        @Test
-//        public void testOutputXML() {
-//             String inputXML = "<DirectoryNode Name=\"WithFile\">"
-//                + EMPTY_DIRECTORY_NODE
-//                + STANDARD_FILE_NODE
-//                + "</DirectoryNode>";
-//
-//            DirectoryNode dir = new DirectoryNode(inputXML);
-//            String output = dir.toXML();
-//            assertEquals(true, output.Contains(inputXML), "/n" + output + "/n" + inputXML);
-//        }
     @Test(expected = DirectoriesApplicationException.class)
-    @SuppressWarnings("ResultOfObjectAllocationIgnored")
     public void parsingXML_Negative_IsNotDir() {
         String xmlInput = STANDARD_FILE_NODE;
         new DirectoryNode(xmlInput);
@@ -113,12 +110,10 @@ public class DirectoryNodesTest {
 
     @Test
     public void parsingXML_Positive_ToXML() {
-        String inputXML = "<DirectoryNode Name=\"WithFile\">"
-                + EMPTY_DIRECTORY_NODE
-                + STANDARD_FILE_NODE
-                + "</DirectoryNode>";
+        //Test code
+        DirectoryNode dir = new DirectoryNode(new DirectoryNode(STANDARD_DIRECTORY_NODE).toXML());
 
-        DirectoryNode dir = new DirectoryNode(new DirectoryNode(inputXML).toXML());
+        //Assert
         assertEquals(2, dir.getChildren().size());
         FileNode innerFile = (FileNode) dir.getChildren().get(1);
         assertEquals("NewFile.xml", innerFile.getName());
@@ -129,7 +124,44 @@ public class DirectoryNodesTest {
 
         assertEquals("WithFile", dir.getName());
     }
-    
-    //TODO add create dir tests, dir + file, dir in dir
-    //TODO parsing file system dir + file, dir in dir
+
+    @Test
+    public void create_EmptyDir() throws IOException {
+        DirectoryNode dir = new DirectoryNode(EMPTY_DIRECTORY_NODE);
+        File tempParentDir = IOUtils.createTestDir("create_EmptyDir_ParentDir");
+
+        dir.create(tempParentDir.getAbsolutePath());
+        this.dirToClean = new File(tempParentDir.getAbsolutePath() + File.separator + dir.getName());
+        assertTrue("Creation of empty dir was unsuccessful", this.dirToClean.exists());
+    }
+
+    @Test
+    public void create_WithFileAndWithDir() throws IOException {
+        DirectoryNode dir = new DirectoryNode(STANDARD_DIRECTORY_NODE);
+        File tempParentDir = IOUtils.createTestDir("create_WithFileAndWithDir");
+
+        dir.create(tempParentDir.getAbsolutePath());
+        this.dirToClean = new File(tempParentDir.getAbsolutePath() + File.separator + dir.getName());
+
+        assertTrue("Creation of parent dir was unsuccessful", this.dirToClean.exists());
+        for (FileSystemNode node : dir.getChildren()) {
+            String path = this.dirToClean.getAbsolutePath() + File.separator + node.getName();
+            assertTrue("Creation of " + node.getClass().getSimpleName() + " inside dir was unsuccessful", new File(path).exists());
+        }
+    }
+
+    @Test
+    public void create_WithNestedDirs() throws IOException {
+        DirectoryNode testDir = new DirectoryNode(STANDARD_DIRECTORY_NODE);
+        File tempParentDir = IOUtils.createTestDir("create_WithNestedDirs");
+
+        testDir.create(tempParentDir.getAbsolutePath());
+        this.dirToClean = new File(tempParentDir.getAbsolutePath() + File.separator + testDir.getName());
+
+        assertTrue("Creation of parent dir was unsuccessful", this.dirToClean.exists());
+        for (FileSystemNode node : testDir.getChildren()) {
+            String path = this.dirToClean.getAbsolutePath() + File.separator + node.getName();
+            assertTrue("Creation of " + node.getClass().getSimpleName() + " inside dir was unsuccessful", new File(path).exists());
+        }
+    }
 }

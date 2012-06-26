@@ -22,7 +22,7 @@ public class FileNodeTest {
 
     @Test
     public void parsing_Positive_SourceSingleFile() throws IOException {
-        File testFile = Utils.createTestFile("file_parsing_Positive_SourceSingleFile.txt");
+        File testFile = IOUtils.createTestFile("file_parsing_Positive_SourceSingleFile.txt");
 
         FileNode file = new FileNode(testFile);
 
@@ -30,7 +30,7 @@ public class FileNodeTest {
     }
 
     public void parsing_Negative_DoesNotExist() throws IOException {
-        File testDir = Utils.createTestDir("test_dir_parsing_Negative_DoesNotExist");
+        File testDir = IOUtils.createTestDir("test_dir_parsing_Negative_DoesNotExist");
         String unrealPath = testDir.getAbsolutePath() + "Inexistent_File.txt";
 
         new FileNode(new File(unrealPath));
@@ -38,7 +38,7 @@ public class FileNodeTest {
 
     @Test(expected = DirectoriesApplicationException.class)
     public void parsing_Negative_IsNotFile() throws IOException {
-        File testDir = Utils.createTestDir("test_dir_parsing_Negative_IsNotFile");
+        File testDir = IOUtils.createTestDir("test_dir_parsing_Negative_IsNotFile");
         new FileNode(testDir);
     }
 
@@ -79,7 +79,7 @@ public class FileNodeTest {
 
     @Test
     public void creating_Positive() throws IOException {
-        File currentDir = Utils.createTestDir("test_dir_creating_Positive");
+        File currentDir = IOUtils.createTestDir("test_dir_creating_Positive");
         try {
             new FileNode(STANDARD_FILE_NODE).create(currentDir.getAbsolutePath());
         } catch (Exception e) {

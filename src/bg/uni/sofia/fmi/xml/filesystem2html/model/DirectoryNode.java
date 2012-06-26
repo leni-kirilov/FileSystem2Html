@@ -160,17 +160,4 @@ public class DirectoryNode extends FileSystemNode {
     public List<FileSystemNode> getChildren() {
         return children;
     }
-    //TODO check if the following code has an equivalent test. If yes - delete this commented code. If not - write test and then delete it! :)
-//    public static void main(String[] args) throws Exception {
-//        String STANDARD_FILE_NODE = "<FileNode Name=\"NewFile.xml\" Size=\"256\" LastDateChanged=\"2010-12-12T06:38:55\"/>";
-//        String EMPTY_DIRECTORY_NODE = "<DirectoryNode Name=\"EmptyDir\" />";
-//        String STANDARD_DIRECTORY_NODE = "<DirectoryNode Name=\"WithFile\">"
-//                + EMPTY_DIRECTORY_NODE
-//                + STANDARD_FILE_NODE
-//                + "</DirectoryNode>";
-//
-//        DirectoryNode dir = new DirectoryNode(STANDARD_DIRECTORY_NODE);
-//        System.out.println(dir.getChildren().get(0).toString());
-//        System.out.println(dir.getChildren().get(1).toString());
-//    }
 }

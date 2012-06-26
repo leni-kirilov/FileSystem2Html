@@ -38,6 +38,8 @@ public class FileNode extends FileSystemNode {
     private boolean isWritable;
     private boolean isExecutable;
 
+    //TODO instead of constructors rewrite using Factory. Applicable for DirectoryNode as well
+    
     public FileNode(File path) {
         validateInput(path);
     }
