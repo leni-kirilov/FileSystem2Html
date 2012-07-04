@@ -19,7 +19,6 @@ import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
  */
 public class FileNodeTest {
 
-
     @Test
     public void parsing_Positive_SourceSingleFile() throws IOException {
         File testFile = IOUtils.createTestFile("file_parsing_Positive_SourceSingleFile.txt");
@@ -29,9 +28,10 @@ public class FileNodeTest {
         assertEquals(testFile.getName(), file.getName());
     }
 
+    @Test(expected = DirectoriesApplicationException.class)
     public void parsing_Negative_DoesNotExist() throws IOException {
         File testDir = IOUtils.createTestDir("test_dir_parsing_Negative_DoesNotExist");
-        String unrealPath = testDir.getAbsolutePath() + "Inexistent_File.txt";
+        String unrealPath = testDir.getAbsolutePath() + File.pathSeparator + "Inexistent_File.txt";
 
         new FileNode(new File(unrealPath));
     }
@@ -63,7 +63,7 @@ public class FileNodeTest {
     }
 
     @Test
-    public void parsing_SourceFileNodeXml() {
+    public void parsing_Positive_SourceFileNodeXml() {
         String xmlInput = "<FileNode Name=\"NewFile.xml\" Size=\"256\" LastDateChanged=\"2010-12-12T06:38:55\"/>";
         FileNode file = new FileNode(xmlInput);
 

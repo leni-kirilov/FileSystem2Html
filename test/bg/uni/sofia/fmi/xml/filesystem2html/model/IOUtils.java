@@ -2,9 +2,7 @@ package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.Arrays;
 import junit.framework.Assert;
 
 /**
