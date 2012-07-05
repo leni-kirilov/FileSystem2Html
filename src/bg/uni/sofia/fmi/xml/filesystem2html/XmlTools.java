@@ -22,11 +22,15 @@ import org.xml.sax.SAXException;
  */
 public class XmlTools {
 
+    private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "xml/FileSystem2HTML.xsl";
+    private final static String FILE_SYSTEM_XSD_LOCATION = "xml/FileSystem.xsd";
+
+//TODO write tests for this Class as well - XMLTest of some sort
     public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {
         try {
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
-            File xslt = FileUtils.locateResource("xml/FileSystem2HTML.xsl");
+            File xslt = FileUtils.locateResource(FILE_SYSTEM_2_HTML_XSL_LOCATION);
 
             Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslt));
             transformer.transform(new StreamSource(inputXml), new StreamResult(resultHtml));
@@ -35,7 +39,13 @@ public class XmlTools {
         }
     }
 
-    public static void validateWithJavax(File inputXML, File schemaXSD) {
+    public static void validateXml(File inputXML) {
+        File SCHEMA_FILE = FileUtils.locateResource(FILE_SYSTEM_XSD_LOCATION);
+        validateXmlWithXsd2(inputXML, SCHEMA_FILE);
+    }
+
+    private static void validateXmlWithXsd2(File inputXML, File schemaXSD) {
+
         try {
             String schemaLang = "http://www.w3.org/2001/XMLSchema";
             SchemaFactory factory = SchemaFactory.newInstance(schemaLang);
@@ -50,24 +60,7 @@ public class XmlTools {
         }
     }
 
-//    public static String xmlToString(org.w3c.dom.Node node) {
-//        try {
-//            StringWriter stringWriter = new StringWriter();
-//
-//            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-//            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-//            transformer.transform(new DOMSource(node), new StreamResult(stringWriter));
-//
-//            return stringWriter.getBuffer().toString();
-//        } catch (TransformerConfigurationException e) {
-//            e.printStackTrace();
-//        } catch (TransformerException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
-    public static void xmlToFile(org.w3c.dom.Node node, File file) {
+    public static void writeFileSystemXmlToFile(org.w3c.dom.Node node, File file) {
         try {
             Document document = node.getOwnerDocument();
             Element fileSystem = document.createElement("FileSystemTree");

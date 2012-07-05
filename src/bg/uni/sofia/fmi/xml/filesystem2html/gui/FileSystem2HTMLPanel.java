@@ -19,15 +19,13 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private File path;
     private File xmlFile;
     private File htmlFile;
-    private final File SCHEMA_FILE;
+    private File currentBrowsingDirectory;
 
     public FileSystem2HTMLPanel() {
         //TODO improve Swing according to Swing best practises, so that Hanging of GUI because of calculations is fixed
         //TODO redo the Swing with code (may be never?)
         initComponents();
         setEnableButtons(false, false);
-        //TODO this XSD is known here, but the XSL is known in the XmlTools class. To be consistent, I should include them both in the XmlTools
-        SCHEMA_FILE = FileUtils.locateResource("xml/FileSystem.xsd");
     }
 
     @SuppressWarnings("unchecked")
@@ -169,7 +167,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
             xmlFile = choosePath("Save to xml", JFileChooser.FILES_ONLY);
             xmlFile = addSuffix(".xml", xmlFile);
-            XmlTools.xmlToFile(resultXml, xmlFile);
+            XmlTools.writeFileSystemXmlToFile(resultXml, xmlFile);
 
             htmlFile = null;
 
@@ -183,7 +181,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private void createHtmlForXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHtmlForXmlActionPerformed
         try {
             xmlFile = choosePath("Choose xml input", JFileChooser.FILES_ONLY);
-            XmlTools.validateWithJavax(xmlFile, SCHEMA_FILE);
+            XmlTools.validateXml(xmlFile);
             htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
             htmlFile = addSuffix(".html", htmlFile);
 
@@ -207,13 +205,13 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             htmlFile = addSuffix(".html", htmlFile);
 
             Element resultXml = createFileSystemXML(path);
-            
+
             //TODO overload convertFileSystemXml2HTML to work not only with XmlFile paths but the XML as well. This way we can skip 2 steps: writing to HDD and then reading from it
             xmlFile = new File("temp.xml");
             xmlFile.deleteOnExit();
-            XmlTools.xmlToFile(resultXml, xmlFile);
+            XmlTools.writeFileSystemXmlToFile(resultXml, xmlFile);
             XmlTools.convertFileSystemXml2HTML(xmlFile, htmlFile);
-            
+
             setTextToLabels();
             setEnableButtons(true, true);
 
@@ -237,12 +235,12 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             path = choosePath("Choose path...", JFileChooser.DIRECTORIES_ONLY);
             htmlFile = null;
 
-            XmlTools.validateWithJavax(xmlFile, SCHEMA_FILE);
+            XmlTools.validateXml(xmlFile);
             String xmlString = FileUtils.readFileAsString(xmlFile);
 
             //TODO rework following so that I don't have to do copy-paste. I need something like factory.
             //TODO improve error handling and branching. Don't use exception instead of IF-else mechanism
-            
+
             //UGLY CODE MADA FAKA
             try {
                 new DirectoryNode(xmlString).create(path.getAbsolutePath());
@@ -325,12 +323,12 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     }
 
     private File choosePath(String text, int chooseMode) throws IllegalArgumentException {
-        //TODO set default folder the previously opened
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser = new JFileChooser(this.currentBrowsingDirectory);
         fileChooser.setFileSelectionMode(chooseMode);
 
         int result = fileChooser.showDialog(this, text);
         if (result == JFileChooser.APPROVE_OPTION) {
+            this.currentBrowsingDirectory = fileChooser.getCurrentDirectory();
             return fileChooser.getSelectedFile();
         } else {
             JOptionPane.showMessageDialog(this, "You didn't select any file. Canceling operation...");
@@ -353,7 +351,6 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         openXmlButton.setEnabled(xml);
         openHtmlButton.setEnabled(html);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chosenPathLabel;
     private javax.swing.JLabel chosenPathLabelLabel;

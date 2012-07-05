@@ -97,7 +97,9 @@ public class FileNode extends FileSystemNode {
 
     private void parseLastDateChanged(Element fileNodeElement) throws ParseException {
         String dateRaw = fileNodeElement.getAttribute(LAST_DATE_CHANGED);
-        Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateRaw);//TODO the locale here is probably not going to work elsewhere... to be checked in other Locale. Create test!
+        
+        //TODO the locale here is probably not going to work elsewhere... to be checked in other Locale. Create test for L10n!
+        Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateRaw);
         this.lastDateChanged = date.getTime();
     }
 

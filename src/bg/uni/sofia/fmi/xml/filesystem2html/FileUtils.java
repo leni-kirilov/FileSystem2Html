@@ -57,8 +57,8 @@ public class FileUtils {
         }
     }
 
-    public static void copyFile(String srFile, String dtFile) {
-        copyFile(new File(srFile), new File(dtFile));
+    public static void copyFile(String sourceFilePath, String destinationFilePath) {
+        copyFile(new File(sourceFilePath), new File(destinationFilePath));
     }
 
     public static String readFileAsString(File filePath) throws IOException {
@@ -66,7 +66,7 @@ public class FileUtils {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
         char[] buf = new char[1024];
         int numRead = 0;
-        
+
         //skips first 2 rows of a xml
         reader.readLine();
         reader.readLine();

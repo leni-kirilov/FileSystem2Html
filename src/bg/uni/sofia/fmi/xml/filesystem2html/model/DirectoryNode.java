@@ -17,7 +17,6 @@ import org.xml.sax.InputSource;
 /**
  *
  * @author Leni Kirilov
- * //TODO understand how to set last changed date automatically to each changed file
  */
 public class DirectoryNode extends FileSystemNode {
 
@@ -66,12 +65,9 @@ public class DirectoryNode extends FileSystemNode {
                     if (currentElement.getNodeName().equals(DIRECTORY_NODE)) {
                         children.add(new DirectoryNode(currentElement));
 
-                    } else if (currentElement.getNodeName().equals(FILENODE)) {
-                        children.add(new FileNode(currentElement));
-
-                        //TODO should I not remove this one here as the XML is already validated with the XSD ? If I have good tests, I can check this quickly
                     } else {
-                        throw new IllegalArgumentException("Unknown element found. Only " + FILENODE + " and " + DIRECTORY_NODE + " expected");
+//                      if it's not a DirectoryNode, it's a FileNode
+                        children.add(new FileNode(currentElement));
                     }
                 }
             }
