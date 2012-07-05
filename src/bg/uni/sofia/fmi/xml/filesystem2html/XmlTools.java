@@ -20,6 +20,7 @@ import org.xml.sax.SAXException;
 /**
  * @author Leni Kirilov
  */
+//TODO run CheckStyle and FindBugs and resolve the most critical errors
 public class XmlTools {
 
     private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "xml/FileSystem2HTML.xsl";
