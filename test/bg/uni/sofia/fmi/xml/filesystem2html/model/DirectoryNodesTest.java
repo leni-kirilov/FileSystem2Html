@@ -1,12 +1,12 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
+import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import org.junit.After;
-import org.junit.Test;
 import static org.junit.Assert.*;
-import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
+import org.junit.Test;
 
 /**
  *
