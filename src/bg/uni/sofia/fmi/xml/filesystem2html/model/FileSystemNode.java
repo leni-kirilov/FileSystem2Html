@@ -1,5 +1,6 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model;
 
+import java.io.File;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -17,12 +18,14 @@ public abstract class FileSystemNode {
 
     /**
      * Get file/dir name
+     *
      * @return
      */
     public abstract String getName();
 
     /**
      * Get XML representation
+     *
      * @return
      */
     public abstract Element toXML();
@@ -31,8 +34,15 @@ public abstract class FileSystemNode {
 
     /**
      * Create files and dirs to a specified path using the data from the object.
+     *
      * @param dirPath
      */
     public abstract void create(String dirPath);
 
+    /**
+     * Create files and dirs to a specified directory using the data from the object.
+     *
+     * @param directory
+     */
+    public abstract void create(File directory);
 }

@@ -43,7 +43,7 @@ public class DirectoryNode extends FileSystemNode {
                 parseXml(document.getDocumentElement());
             }
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("", e);
+            throw new FileSystemNodeCreationException("", e);
         }
     }
 
@@ -72,7 +72,7 @@ public class DirectoryNode extends FileSystemNode {
                 }
             }
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("Parsing of xml failed." + e.getMessage(), e);
+            throw new FileSystemNodeCreationException("Parsing of xml failed." + e.getMessage(), e);
         }
     }
 
@@ -92,7 +92,7 @@ public class DirectoryNode extends FileSystemNode {
                 }
             }
         } else {
-            throw new DirectoriesApplicationException("Isn't a dir or does not exist", new Exception());
+            throw new FileSystemNodeCreationException("Isn't a dir or does not exist", new Exception());
         }
     }
 
@@ -117,7 +117,7 @@ public class DirectoryNode extends FileSystemNode {
 
             return dirNodeElement;
         } catch (ParserConfigurationException ex) {
-            throw new DirectoriesApplicationException("Failed conversion to XML string", ex);
+            throw new FileSystemNodeCreationException("Failed conversion to XML string", ex);
         }
     }
 
@@ -131,8 +131,13 @@ public class DirectoryNode extends FileSystemNode {
                 node.create(pathToThisDir);
             }
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("Creation of " + this + " fails", e);
+            throw new FileSystemNodeCreationException("Creation of " + this + " fails", e);
         }
+    }
+
+    @Override
+    public void create(File directory) {
+        this.create(directory.getAbsolutePath());
     }
 
     @Override

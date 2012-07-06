@@ -18,7 +18,7 @@ import org.xml.sax.InputSource;
 /**
  *
  * Represents FileNode
- * 
+ *
  * @author Leni Kirilov
  */
 public class FileNode extends FileSystemNode {
@@ -39,7 +39,10 @@ public class FileNode extends FileSystemNode {
     private boolean isExecutable;
 
     //TODO instead of constructors rewrite using Factory. Applicable for DirectoryNode as well
-    
+    /**
+     *
+     * @param path - points to the file to be recreated as a FileNode
+     */
     public FileNode(File path) {
         validateInput(path);
     }
@@ -48,6 +51,10 @@ public class FileNode extends FileSystemNode {
         parseXml(element);
     }
 
+    /**
+     *
+     * @param xml - XML string which contains all the XML data for a FileNode
+     */
     public FileNode(String xml) {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -67,7 +74,7 @@ public class FileNode extends FileSystemNode {
 
             parseXml(nodes.item(0));
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("", e);
+            throw new FileSystemNodeCreationException("", e);
         }
     }
 
@@ -82,7 +89,7 @@ public class FileNode extends FileSystemNode {
             parseWritable(fileNodeElement);
             parseReadable(fileNodeElement);
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("Parsing of xml failed." + e.getMessage(), e);
+            throw new FileSystemNodeCreationException("Parsing of xml failed." + e.getMessage(), e);
         }
     }
 
@@ -97,7 +104,7 @@ public class FileNode extends FileSystemNode {
 
     private void parseLastDateChanged(Element fileNodeElement) throws ParseException {
         String dateRaw = fileNodeElement.getAttribute(LAST_DATE_CHANGED);
-        
+
         //TODO the locale here is probably not going to work elsewhere... to be checked in other Locale. Create test for L10n!
         Date date = new SimpleDateFormat(DATE_FORMAT, Locale.US).parse(dateRaw);
         this.lastDateChanged = date.getTime();
@@ -133,7 +140,7 @@ public class FileNode extends FileSystemNode {
             this.isWritable = file.canWrite();
             this.isExecutable = file.canExecute();
         } else {
-            throw new DirectoriesApplicationException("File doesn't exist!");
+            throw new FileSystemNodeCreationException("File doesn't exist!");
         }
     }
 
@@ -160,7 +167,7 @@ public class FileNode extends FileSystemNode {
 
             return fileNodeElement;
         } catch (ParserConfigurationException ex) {
-            throw new DirectoriesApplicationException("Conversion to XML failed", ex);
+            throw new FileSystemNodeCreationException("Conversion to XML failed", ex);
         }
     }
 
@@ -178,8 +185,13 @@ public class FileNode extends FileSystemNode {
             file.setReadable(isReadable);
             file.setWritable(isWritable);
         } catch (Exception e) {
-            throw new DirectoriesApplicationException("Creation of " + this + " fails", e);
+            throw new FileSystemNodeCreationException("Creation of " + this + " fails", e);
         }
+    }
+
+    @Override
+    public void create(File directory) {
+        this.create(directory.getAbsolutePath());
     }
 
     @Override

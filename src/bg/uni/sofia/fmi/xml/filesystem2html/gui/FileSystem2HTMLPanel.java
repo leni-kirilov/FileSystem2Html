@@ -4,6 +4,8 @@ import bg.uni.sofia.fmi.xml.filesystem2html.FileUtils;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.DirectoryNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.XmlTools;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNode;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNodeFactory;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFileChooser;
@@ -238,27 +240,12 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             XmlTools.validateXml(xmlFile);
             String xmlString = FileUtils.readFileAsString(xmlFile);
 
-            //TODO rework following so that I don't have to do copy-paste. I need something like factory.
-            //TODO improve error handling and branching. Don't use exception instead of IF-else mechanism
+            FileSystemNode node = FileSystemNodeFactory.createNode(xmlString);
+            node.create(path);
+            setTextToLabels();
+            setEnableButtons(true, false);
+            return;
 
-            //UGLY CODE MADA FAKA
-            try {
-                new DirectoryNode(xmlString).create(path.getAbsolutePath());
-                setTextToLabels();
-                setEnableButtons(true, false);
-                return;
-            } catch (Throwable e) {
-            }
-
-            try {
-                new FileNode(xmlString).create(path.getAbsolutePath());
-                setTextToLabels();
-                setEnableButtons(true, false);
-                return;
-            } catch (Throwable e) {
-            }
-
-            throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, "Incorrect input. Files/dirs could not be created");
         } catch (IOException e) {
@@ -281,8 +268,8 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     }
 
     /**
-     * This is done so that the resulting html can easily refer the images with simple relative path.
-     * //TODO think of a better way to do this relative pointings
+     * This is done so that the resulting html can easily refer the images with simple relative path. //TODO think of a
+     * better way to do this relative pointings
      */
     private void copyImageFiles() {
         String resultHtmlFolder = getDirectory(htmlFile);

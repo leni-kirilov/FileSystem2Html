@@ -35,14 +35,14 @@ public class DirectoryNodesTest {
         new DirectoryNode(new File(realDirPath));
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_DirDoesNotExist() throws IOException {
         String realDirPath = IOUtils.createTestDir("test_dir_testCreation_Negative_DoesNotExist").getAbsolutePath();
         String fakeDirPath = realDirPath + "\\Inexistent_Dir\\";
         new DirectoryNode(new File(fakeDirPath));
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_IsNotDirectory() throws IOException {
         String realFilePath = IOUtils.createTestFile("file_testCreation_Negative_IsNotDirectory.txt").getAbsolutePath();
         new DirectoryNode(new File(realFilePath));
@@ -102,7 +102,7 @@ public class DirectoryNodesTest {
         assertEquals("WithFile", dir.getName());
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsingXML_Negative_IsNotDir() {
         String xmlInput = STANDARD_FILE_NODE;
         new DirectoryNode(xmlInput);

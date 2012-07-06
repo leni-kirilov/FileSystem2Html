@@ -6,13 +6,13 @@ package bg.uni.sofia.fmi.xml.filesystem2html.model;
  *
  * @author Leni Kirilov
  */
-public class DirectoriesApplicationException extends RuntimeException {
+public class FileSystemNodeCreationException extends RuntimeException {
 
-    public DirectoriesApplicationException(String message) {
+    public FileSystemNodeCreationException(String message) {
         this(message, null);
     }
 
-    public DirectoriesApplicationException(String message, Throwable t) {
+    public FileSystemNodeCreationException(String message, Throwable t) {
         super(message, t);
     }
 }

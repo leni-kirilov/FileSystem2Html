@@ -28,7 +28,7 @@ public class FileNodeTest {
         assertEquals(testFile.getName(), file.getName());
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_DoesNotExist() throws IOException {
         File testDir = IOUtils.createTestDir("test_dir_parsing_Negative_DoesNotExist");
         String unrealPath = testDir.getAbsolutePath() + File.pathSeparator + "Inexistent_File.txt";
@@ -36,7 +36,7 @@ public class FileNodeTest {
         new FileNode(new File(unrealPath));
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_IsNotFile() throws IOException {
         File testDir = IOUtils.createTestDir("test_dir_parsing_Negative_IsNotFile");
         new FileNode(testDir);
@@ -54,7 +54,7 @@ public class FileNodeTest {
         assertEquals(true, file.isExecutable());
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_DirectoryNodeXML() {
         String inputXML = "<DirectoryNode Name=\"WithFile\">"
                 + STANDARD_FILE_NODE
@@ -89,7 +89,7 @@ public class FileNodeTest {
         }
     }
 
-    @Test(expected = DirectoriesApplicationException.class)
+    @Test(expected = FileSystemNodeCreationException.class)
     public void parsing_Negative_TwoFileNodesXml() {
         String xmlInput = STANDARD_FILE_NODE + STANDARD_FILE_NODE;
         new FileNode(xmlInput);
