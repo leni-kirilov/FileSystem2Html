@@ -1,9 +1,7 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.gui;
 
-import bg.uni.sofia.fmi.xml.filesystem2html.FileUtils;
-import bg.uni.sofia.fmi.xml.filesystem2html.model.DirectoryNode;
-import bg.uni.sofia.fmi.xml.filesystem2html.model.FileNode;
-import bg.uni.sofia.fmi.xml.filesystem2html.XmlTools;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.FileUtils;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.XmlTools;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNodeFactory;
 import java.io.File;
@@ -165,7 +163,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private void createXmlFromPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createXmlFromPathButtonActionPerformed
         try {
             path = choosePath("Choose path", JFileChooser.FILES_AND_DIRECTORIES);
-            Element resultXml = createFileSystemXML(path);
+            Element resultXml = createFileSystemNodeXML(path);
 
             xmlFile = choosePath("Save to xml", JFileChooser.FILES_ONLY);
             xmlFile = addSuffix(".xml", xmlFile);
@@ -206,7 +204,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
             htmlFile = addSuffix(".html", htmlFile);
 
-            Element resultXml = createFileSystemXML(path);
+            Element resultXml = createFileSystemNodeXML(path);
 
             //TODO overload convertFileSystemXml2HTML to work not only with XmlFile paths but the XML as well. This way we can skip 2 steps: writing to HDD and then reading from it
             xmlFile = new File("temp.xml");
@@ -268,7 +266,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     }
 
     /**
-     * This is done so that the resulting html can easily refer the images with simple relative path. //TODO think of a
+     * This is done so that the resulting html can easily refer the images with simple relative path.
      * better way to do this relative pointings
      */
     private void copyImageFiles() {
@@ -324,14 +322,8 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     }
 
     //TODO redo FileNode and DirectoryNode implementations with JAX-B annotations
-    private Element createFileSystemXML(File path) {
-        if (path.isFile()) {
-            return new FileNode(path).toXML();
-        } else if (path.isDirectory()) {
-            return new DirectoryNode(path).toXML();
-        } else {
-            throw new RuntimeException("Invalid file chosen");
-        }
+    private Element createFileSystemNodeXML(File path) {
+        return FileSystemNodeFactory.createNode(path).toXML();
     }
 
     private void setEnableButtons(boolean xml, boolean html) {

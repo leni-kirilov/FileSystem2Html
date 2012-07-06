@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import static bg.uni.sofia.fmi.xml.filesystem2html.model.XmlExamples.*;
 
-//TODO convert project to Java7. Use Java7 features
 /**
  *
  * Tests the basic functions of a FileNode

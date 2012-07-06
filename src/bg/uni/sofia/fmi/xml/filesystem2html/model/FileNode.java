@@ -38,7 +38,6 @@ public class FileNode extends FileSystemNode {
     private boolean isWritable;
     private boolean isExecutable;
 
-    //TODO instead of constructors rewrite using Factory. Applicable for DirectoryNode as well
     /**
      *
      * @param path - points to the file to be recreated as a FileNode

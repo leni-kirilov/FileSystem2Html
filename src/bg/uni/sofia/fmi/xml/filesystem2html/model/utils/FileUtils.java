@@ -1,4 +1,4 @@
-package bg.uni.sofia.fmi.xml.filesystem2html;
+package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +16,7 @@ import java.net.URL;
  *
  * @author Leni Kirilov
  */
+//TODO cover with tests inless a better IO library is found
 public class FileUtils {
 
     private static String MAIN_PACKAGE;

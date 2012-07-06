@@ -1,4 +1,4 @@
-package bg.uni.sofia.fmi.xml.filesystem2html;
+package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
 import java.io.File;
 import java.io.IOException;

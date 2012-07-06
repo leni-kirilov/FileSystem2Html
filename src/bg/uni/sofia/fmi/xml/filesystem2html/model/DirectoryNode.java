@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+//TODO generate Javadoc and upload it to GitHub
 //TODO rework in Java7 - better IO, better Exception handling. Some syntactic sugar -> learn Java 7 this way
 /**
  *
