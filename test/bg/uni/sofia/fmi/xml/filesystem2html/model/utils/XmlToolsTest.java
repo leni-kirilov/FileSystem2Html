@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
  *
  * @author Leni
  */
+@Ignore
 public class XmlToolsTest {
     
     public XmlToolsTest() {

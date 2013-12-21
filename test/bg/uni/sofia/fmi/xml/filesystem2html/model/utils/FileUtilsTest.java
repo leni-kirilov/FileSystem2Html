@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 /**
  * @author Leni
  */
+@Ignore
 public class FileUtilsTest {
 
     /**
