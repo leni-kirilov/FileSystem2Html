@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
 import java.io.File;
@@ -9,29 +5,9 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 /**
- *
  * @author Leni
  */
 public class FileUtilsTest {
-    
-    public FileUtilsTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of locateResource method, of class FileUtils.
@@ -43,7 +19,6 @@ public class FileUtilsTest {
         File expResult = null;
         File result = FileUtils.locateResource(name);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -56,7 +31,6 @@ public class FileUtilsTest {
         File sourceFile = null;
         File destinationFile = null;
         FileUtils.copyFile(sourceFile, destinationFile);
-        // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -69,7 +43,6 @@ public class FileUtilsTest {
         String sourceFilePath = "";
         String destinationFilePath = "";
         FileUtils.copyFile(sourceFilePath, destinationFilePath);
-        // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 
@@ -83,7 +56,6 @@ public class FileUtilsTest {
         String expResult = "";
         String result = FileUtils.readFileAsString(filePath);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
 }
