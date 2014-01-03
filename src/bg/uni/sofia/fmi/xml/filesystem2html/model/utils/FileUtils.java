@@ -39,11 +39,12 @@ public class FileUtils {
     //TODO search of a better IO library to include in the project.
     public static void copyFile(File sourceFile, File destinationFile) {
         try {
+            System.out.println("sourceFile= " + sourceFile.getAbsolutePath());
+            System.out.println("destinationFile= " + destinationFile.getAbsolutePath());
+
             InputStream in = new FileInputStream(sourceFile);
             OutputStream out = new FileOutputStream(destinationFile);
-//            System.out.println("sourceFile= " + sourceFile.getAbsolutePath());
-//            System.out.println("destinationFile= " + destinationFile.getAbsolutePath());
-
+            
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {
