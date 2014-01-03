@@ -13,10 +13,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
- *
  * @author Leni Kirilov
  */
-//TODO cover with tests inless a better IO library is found
+
+//TODO move images and helper xml and XSD files to /resources folder; aslo run.bat is not OK
+//TODO maven depedencies clear
+//TODO create maven master POM project and include modules: model, utils, ui, (and tests for each one)
+//TODO cover with tests unless a better IO library is found
 public class FileUtils {
 
     private static String MAIN_PACKAGE;
