@@ -3,3 +3,6 @@
 /dist/
 /target
 /nbproject
+.settings
+.project
+.classpath
