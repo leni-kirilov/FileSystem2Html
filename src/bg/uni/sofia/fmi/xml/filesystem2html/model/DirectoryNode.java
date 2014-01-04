@@ -13,7 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-//TODO generate Javadoc and upload it to GitHub
+//TODO generate Javadoc
 //TODO rework in Java7 - better IO, better Exception handling. Some syntactic sugar -> learn Java 7 this way
 /**
  *
@@ -67,7 +67,7 @@ public class DirectoryNode extends FileSystemNode {
                         children.add(new DirectoryNode(currentElement));
 
                     } else {
-//                      if it's not a DirectoryNode, it's a FileNode
+						// if it's not a DirectoryNode, it's a FileNode
                         children.add(new FileNode(currentElement));
                     }
                 }

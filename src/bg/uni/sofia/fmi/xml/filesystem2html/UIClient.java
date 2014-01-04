@@ -23,8 +23,6 @@ public class UIClient {
                 frame.add(new FileSystem2HTMLPanel());
                 frame.setResizable(false);
                 frame.setVisible(true);
-
-                System.out.println("parse size info");
             }
         });
     }

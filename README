@@ -17,5 +17,3 @@ DEV ENV SETUP INSTRUCTIONS
 2. Import as Maven project
 3. Perform mvn clean test
 4. If tests are green you're done!
-
-

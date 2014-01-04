@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -24,12 +23,12 @@ import org.xml.sax.SAXException;
 public class XmlTools {
 
     private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "xml/FileSystem2HTML.xsl";
-    private final static String FILE_SYSTEM_XSD_LOCATION = "xml/FileSystem.xsd";
+	private final static String FILE_SYSTEM_XSD_LOCATION = "xml/FileSystem.xsd";
 
-//TODO write tests for this Class as well - XMLTest of some sort
-    public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {
-        try {
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+	// TODO write tests for this Class as well - XMLTest of some sort
+	public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {
+		try {
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
             File xslt = FileUtils.locateResource(FILE_SYSTEM_2_HTML_XSL_LOCATION);
 
@@ -54,9 +53,7 @@ public class XmlTools {
             Validator validator = schema.newValidator();
             validator.validate(new StreamSource(inputXML));
 
-        } catch (IOException ex) {
-            throw new RuntimeException("Validation of FileSystem xml failed", ex);
-        } catch (SAXException ex) {
+        } catch (IOException | SAXException ex) {
             throw new RuntimeException("Validation of FileSystem xml failed", ex);
         }
     }
@@ -73,9 +70,8 @@ public class XmlTools {
 
             transformer.transform(new DOMSource(fileSystem), new StreamResult(file));
 
-        } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
         } catch (TransformerException e) {
+        	//TODO the exception should be handled...
             e.printStackTrace();
         }
     }

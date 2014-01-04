@@ -24,24 +24,25 @@ import org.xml.sax.InputSource;
 public class FileNode extends FileSystemNode {
 
     private static final String SIZE = "Size";
-    private static final String HIDDEN = "Hidden";
-    private static final String READABLE = "Readable";
-    private static final String WRITABLE = "Writable";
-    private static final String EXECUTABLE = "Executable";
-    private static final String LAST_DATE_CHANGED = "LastDateChanged";
-    private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss";
-    //
-    private long size;
-    private long lastDateChanged;
-    private boolean isHidden;
-    private boolean isReadable;
-    private boolean isWritable;
-    private boolean isExecutable;
+	private static final String HIDDEN = "Hidden";
+	private static final String READABLE = "Readable";
+	private static final String WRITABLE = "Writable";
+	private static final String EXECUTABLE = "Executable";
+	private static final String LAST_DATE_CHANGED = "LastDateChanged";
+	private static final String DATE_FORMAT = "yyyy-MM-dd'T'hh:mm:ss";
 
-    /**
-     *
-     * @param path - points to the file to be recreated as a FileNode
-     */
+	private long size;
+	private long lastDateChanged;
+	private boolean isHidden;
+	private boolean isReadable;
+	private boolean isWritable;
+	private boolean isExecutable;
+
+	/**
+	 * 
+	 * @param path
+	 *            - points to the file to be recreated as a FileNode
+	 */
     public FileNode(File path) {
         validateInput(path);
     }

@@ -10,10 +10,6 @@ import java.io.File;
  */
 public class FileSystemNodeFactory {
 
-//    public static FileSystemNode createNode(File xmlFile) throws IOException {
-//        String xmlString = FileUtils.readFileAsString(xmlFile);
-//        return createNode(xmlString);
-//    }
     /**
      * Parses the string and returns the correct Node type.
      *
@@ -24,6 +20,7 @@ public class FileSystemNodeFactory {
 
         FileSystemNode node = null;
 
+        //TODO extract magic string
         if (xmlString.contains("DirectoryNode")) {
             node = new DirectoryNode(xmlString);
         } else {

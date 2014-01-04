@@ -3,7 +3,6 @@ package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -55,10 +54,8 @@ public class FileUtils {
             }
             in.close();
             out.close();
-        } catch (FileNotFoundException ex) {
-            throw new RuntimeException("Copy of files failed", ex);
-        } catch (IOException e) {
-            throw new RuntimeException("Copy of files failed", e);
+        } catch (IOException ex) {
+            throw new RuntimeException("Copy of files failed", ex); //TODO add better description here. Which files. What exception
         }
     }
 
@@ -80,7 +77,7 @@ public class FileUtils {
             fileData.append(readData);
             buf = new char[1024];
         }
-        reader.close();
+        reader.close(); //TODO try out the try(closable) Java 7 style here
 
         //TODO why have I included this hack here? Can I not skip this replace at all?
         return fileData.toString().replace("\n</FileSystemTree>", "");
