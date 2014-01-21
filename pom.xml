@@ -5,7 +5,7 @@
 	<groupId>FileSystem2Html</groupId>
 	<artifactId>FileSystem2Html</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>FileSystem2Html</name>
+	
 	<description>Exporting file system hierarchy to xml/html</description>
 
 	<dependencies>

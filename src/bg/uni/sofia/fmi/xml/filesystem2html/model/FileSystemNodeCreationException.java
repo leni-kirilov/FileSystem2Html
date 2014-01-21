@@ -8,7 +8,9 @@ package bg.uni.sofia.fmi.xml.filesystem2html.model;
  */
 public class FileSystemNodeCreationException extends RuntimeException {
 
-    public FileSystemNodeCreationException(String message) {
+	private static final long serialVersionUID = -7553207804017159942L;
+
+	public FileSystemNodeCreationException(String message) {
         this(message, null);
     }
 
