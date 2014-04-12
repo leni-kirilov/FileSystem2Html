@@ -1,0 +1,48 @@
+<?bg.kirilov.filesystem2html.utils.xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+<FileSystemTree>
+    <FileNode Name="File.txt"
+          Size="2000"
+          LastDateChanged="2001-10-26T21:32:52"/>
+</FileSystemTree>-->
+
+<!--<FileSystemTree>
+    <DirectoryNode Name="bla">
+        <DirectoryNode Name="bla1"/>
+        <DirectoryNode Name="bla3">
+            <DirectoryNode Name="bla1"/>
+            <FileNode Name="File.txt" Size="2000" LastDateChanged="2001-10-26T21:32:52"/>
+        </DirectoryNode>
+        <FileNode Name="File.txt" Size="2000" LastDateChanged="2001-10-26T21:32:52"/>
+    </DirectoryNode>
+</FileSystemTree>-->
+
+<FileSystemTree>
+    <DirectoryNode Name="My Games">
+        <DirectoryNode Name="Fable">
+            <DirectoryNode Name="Saves">
+                <DirectoryNode Name="Leni">
+                    <FileNode LastDateChanged="2010-08-11T12:48:30" Name="AutoSave" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-11T12:17:18" Name="AutoSave.qs" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-10T11:09:14" Name="Manual - Save1" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-10T11:09:14" Name="Manual - Save1.hs" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-10T11:46:28" Name="Manual - Save2" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-10T11:46:28" Name="Manual - Save2.hs" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-11T12:10:05" Name="Manual - Save3" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-11T12:50:10" Name="Manual - Save4" Size="307200"/>
+                    <FileNode LastDateChanged="2010-08-11T12:50:10" Name="Profile.bin" Size="17632"/>
+                </DirectoryNode>
+            </DirectoryNode>
+            <DirectoryNode Name="Tattoos">
+                <DirectoryNode Name="Leni">
+                    <FileNode LastDateChanged="2010-08-10T09:54:35" Name="arms.bmp" Size="786488"/>
+                    <FileNode LastDateChanged="2010-08-10T09:54:35" Name="back.bmp" Size="786488"/>
+                    <FileNode LastDateChanged="2010-08-10T09:54:34" Name="chest.bmp" Size="786488"/>
+                    <FileNode LastDateChanged="2010-08-10T09:54:34" Name="face.bmp" Size="786488"/>
+                    <FileNode LastDateChanged="2010-08-10T09:54:36" Name="legs.bmp" Size="786488"/>
+                </DirectoryNode>
+                <FileNode LastDateChanged="2010-08-10T09:54:36" Name="Custom Tattoo Tutorial.txt" Size="1151"/>
+            </DirectoryNode>
+        </DirectoryNode>
+    </DirectoryNode>
+</FileSystemTree>
