@@ -1,20 +1,16 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.gui;
 
-import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.FileUtils;
-import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.XmlTools;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNode;
 import bg.uni.sofia.fmi.xml.filesystem2html.model.FileSystemNodeFactory;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.FileUtils;
+import bg.uni.sofia.fmi.xml.filesystem2html.model.utils.XmlTools;
+import org.w3c.dom.Element;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import org.w3c.dom.Element;
-
 /**
- *
  * @author Leni Kirilov
  */
 //TODO write doc description for this class
@@ -112,58 +108,58 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(createPathButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createXmlFromPathButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createHtmlForXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(createHtmlForPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(openHtmlButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(openXmlButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(xmlPathLabel)
-                    .addComponent(chosenPathLabelLabel)
-                    .addComponent(chosenPathLabel)
-                    .addComponent(resultXmlPathLabelLabel)
-                    .addComponent(resultHtmlLabelLabel)
-                    .addComponent(htmlLabel))
-                .addContainerGap(126, Short.MAX_VALUE))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(createPathButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(createXmlFromPathButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(createHtmlForXml, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(createHtmlForPath, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(openHtmlButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(openXmlButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(xmlPathLabel)
+                                        .addComponent(chosenPathLabelLabel)
+                                        .addComponent(chosenPathLabel)
+                                        .addComponent(resultXmlPathLabelLabel)
+                                        .addComponent(resultHtmlLabelLabel)
+                                        .addComponent(htmlLabel))
+                                .addContainerGap(126, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(chosenPathLabelLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(chosenPathLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resultXmlPathLabelLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(xmlPathLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(resultHtmlLabelLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(htmlLabel))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(createXmlFromPathButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createHtmlForXml)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(createHtmlForPath)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(openHtmlButton)
-                            .addComponent(openXmlButton))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(createPathButton)))
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(chosenPathLabelLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(chosenPathLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(resultXmlPathLabelLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(xmlPathLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(resultHtmlLabelLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(htmlLabel))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addComponent(createXmlFromPathButton)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(createHtmlForXml)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(createHtmlForPath)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(openHtmlButton)
+                                                        .addComponent(openXmlButton))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(createPathButton)))
+                                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -181,8 +177,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             setTextToLabels();
             setEnableButtons(true, false);
         } catch (IllegalArgumentException e) {
-        	//TODO display some sort of notification to the user about an error
-            return;
+            //TODO display some sort of notification to the user about an error
         }
     }//GEN-LAST:event_createXmlFromPathButtonActionPerformed
 
@@ -201,8 +196,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
             copyImageFiles();
         } catch (IllegalArgumentException e) {
-        	//TODO display some sort of notification to the user about an error
-            return;
+            //TODO display some sort of notification to the user about an error
         }
     }//GEN-LAST:event_createHtmlForXmlActionPerformed
 
@@ -227,8 +221,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
             copyImageFiles();
         } catch (IllegalArgumentException e) {
-        	//TODO display some sort of notification to the user about an error
-            return;
+            //TODO display some sort of notification to the user about an error
         }
     }//GEN-LAST:event_createHtmlForPathActionPerformed
 
@@ -254,13 +247,9 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             node.create(path);
             setTextToLabels();
             setEnableButtons(true, false);
-            return;
 
-            
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | IOException e) {
             //TODO i18n of messages
-            JOptionPane.showMessageDialog(this, "Incorrect input. Files/dirs could not be created");
-        } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Incorrect input. Files/dirs could not be created");
         }
     }//GEN-LAST:event_createPathButtonActionPerformed
@@ -293,34 +282,33 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private String getDirectory(File file) {
         String s = file.getAbsolutePath();
         int index = s.lastIndexOf("\\");
-        String dir = s.substring(0, index) + "\\";
-        return dir;
+        return s.substring(0, index) + "\\";
     }
 
     //TODO refactor magic constant 
     private void openFile(File file) {
         String osName = System.getProperty("os.name");
         if (osName.contains("Windows")) {
-            openInWindowsOS(file);
+            openWindowsStyle(file);
         } else if (osName.contains("Mac")) {
-            openInMacOS(file);
+            openLinuxStyle(file);
         }
     }
 
-    private void openInWindowsOS(File file) {
+    private void openWindowsStyle(File file) {
         try {
             Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler \"" + file.toString() + "\"");
             p.waitFor();
-        } catch (IOException e) {
-        } catch (InterruptedException e) {
+        } catch (IOException | InterruptedException e) {
+            //TODO handle the IO exceptions and tell the user something bad is happening
         }
     }
 
-    //TODO may be rename to openInLinux 
-    private void openInMacOS(File file) {
+    private void openLinuxStyle(File file) {
         try {
             Runtime.getRuntime().exec("open " + file.toString());
         } catch (IOException e) {
+            //TODO handle the IO exceptions and tell the user something bad is happening
         }
     }
 
@@ -349,10 +337,10 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         openXmlButton.setEnabled(xml);
         openHtmlButton.setEnabled(html);
     }
-    
+
     //TODO move these variables declarations on the top
     //TODO remove slowly auto-generated comments
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel chosenPathLabel;
     private javax.swing.JLabel chosenPathLabelLabel;

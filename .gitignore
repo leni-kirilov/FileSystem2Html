@@ -7,3 +7,5 @@
 .project
 .classpath
 /temp.xml
+/.idea
+*.iml

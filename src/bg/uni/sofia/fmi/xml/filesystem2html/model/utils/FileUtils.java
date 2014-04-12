@@ -1,13 +1,6 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -16,7 +9,7 @@ import java.net.URL;
  */
 
 //TODO move images and helper xml and XSD files to /resources folder; aslo run.bat is not OK
-//TODO maven depedencies clear
+//TODO maven dependencies clear
 //TODO create maven master POM project and include modules: model, utils, ui, (and tests for each one)
 //TODO cover with tests unless a better IO library is found
 public class FileUtils {
@@ -46,7 +39,7 @@ public class FileUtils {
 
             InputStream in = new FileInputStream(sourceFile);
             OutputStream out = new FileOutputStream(destinationFile);
-            
+
             byte[] buf = new byte[1024];
             int len;
             while ((len = in.read(buf)) > 0) {

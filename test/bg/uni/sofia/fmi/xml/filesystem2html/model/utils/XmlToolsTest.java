@@ -4,35 +4,21 @@
  */
 package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
-import java.io.File;
-import org.junit.*;
-import static org.junit.Assert.*;
+import org.junit.Ignore;
+import org.junit.Test;
 import org.w3c.dom.Node;
 
+import java.io.File;
+
+import static org.junit.Assert.fail;
+
 /**
- *
- * @author Leni
+ * @author Leni Kirilov
  */
 @Ignore
 public class XmlToolsTest {
     
     public XmlToolsTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
-
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
     }
 
     /**

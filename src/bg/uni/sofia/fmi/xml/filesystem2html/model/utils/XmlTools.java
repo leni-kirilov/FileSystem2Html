@@ -1,7 +1,9 @@
 package bg.uni.sofia.fmi.xml.filesystem2html.model.utils;
 
-import java.io.File;
-import java.io.IOException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -12,30 +14,28 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author Leni Kirilov
  */
-//TODO run CheckStyle and FindBugs and resolve the most critical errors
 public class XmlTools {
 
     private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "xml/FileSystem2HTML.xsl";
-	private final static String FILE_SYSTEM_XSD_LOCATION = "xml/FileSystem.xsd";
+    private final static String FILE_SYSTEM_XSD_LOCATION = "xml/FileSystem.xsd";
 
-	// TODO write tests for this Class as well - XMLTest of some sort
-	public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {
-		try {
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    // TODO write tests for this Class as well - XMLTest of some sort
+    public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {
+        try {
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
 
             File xslt = FileUtils.locateResource(FILE_SYSTEM_2_HTML_XSL_LOCATION);
 
             Transformer transformer = transformerFactory.newTransformer(new StreamSource(xslt));
             transformer.transform(new StreamSource(inputXml), new StreamResult(resultHtml));
         } catch (TransformerException ex) {
-            throw new RuntimeException("Xslt convertion failed", ex);
+            throw new RuntimeException("Xslt conversion failed", ex);
         }
     }
 
@@ -58,7 +58,7 @@ public class XmlTools {
         }
     }
 
-    public static void writeFileSystemXmlToFile(org.w3c.dom.Node node, File file) {
+    public static void writeFileSystemXmlToFile(org.w3c.dom.Node node, File xsltFile) {
         try {
             Document document = node.getOwnerDocument();
             Element fileSystem = document.createElement("FileSystemTree");
@@ -68,10 +68,10 @@ public class XmlTools {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
-            transformer.transform(new DOMSource(fileSystem), new StreamResult(file));
+            transformer.transform(new DOMSource(fileSystem), new StreamResult(xsltFile));
 
         } catch (TransformerException e) {
-        	//TODO the exception should be handled...
+            //TODO the exception should be handled...
             e.printStackTrace();
         }
     }
