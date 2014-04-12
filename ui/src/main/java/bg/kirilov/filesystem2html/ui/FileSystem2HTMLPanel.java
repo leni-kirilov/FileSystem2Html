@@ -54,7 +54,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             }
         });
 
-        createHtmlForXml.setText("Create HTML for bg.kirilov.filesystem2html.utils.xml...");
+        createHtmlForXml.setText("Create HTML for xml...");
         createHtmlForXml.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 createHtmlForXmlActionPerformed(evt);
@@ -74,7 +74,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
         chosenPathLabel.setText(" ");
 
         resultXmlPathLabelLabel.setForeground(new java.awt.Color(255, 0, 0));
-        resultXmlPathLabelLabel.setText("Result bg.kirilov.filesystem2html.utils.xml:");
+        resultXmlPathLabelLabel.setText("Result xml:");
 
         xmlPathLabel.setText(" ");
 
@@ -167,8 +167,8 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             path = choosePath("Choose path", JFileChooser.FILES_AND_DIRECTORIES);
             Element resultXml = createFileSystemNodeXML(path);
 
-            xmlFile = choosePath("Save to bg.kirilov.filesystem2html.utils.xml", JFileChooser.FILES_ONLY);
-            xmlFile = addSuffix(".bg.kirilov.filesystem2html.utils.xml", xmlFile);
+            xmlFile = choosePath("Save to xml", JFileChooser.FILES_ONLY);
+            xmlFile = addSuffix(".xml", xmlFile);
             XmlTools.writeFileSystemXmlToFile(resultXml, xmlFile);
 
             htmlFile = null;
@@ -182,7 +182,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
     private void createHtmlForXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHtmlForXmlActionPerformed
         try {
-            xmlFile = choosePath("Choose bg.kirilov.filesystem2html.utils.xml input", JFileChooser.FILES_ONLY);
+            xmlFile = choosePath("Choose xml input", JFileChooser.FILES_ONLY);
             XmlTools.validateXml(xmlFile);
             htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
             htmlFile = addSuffix(".html", htmlFile);
@@ -210,7 +210,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
             Element resultXml = createFileSystemNodeXML(path);
 
             //TODO overload convertFileSystemXml2HTML to work not only with XmlFile paths but the XML as well. This way we can skip 2 steps: writing to HDD and then reading from it
-            xmlFile = new File("temp.bg.kirilov.filesystem2html.utils.xml");
+            xmlFile = new File("temp.xml");
             xmlFile.deleteOnExit();
             XmlTools.writeFileSystemXmlToFile(resultXml, xmlFile);
             XmlTools.convertFileSystemXml2HTML(xmlFile, htmlFile);
@@ -235,7 +235,7 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     private void createPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPathButtonActionPerformed
         try {
             //TODO i18n of messages
-            xmlFile = choosePath("Choose bg.kirilov.filesystem2html.utils.xml...", JFileChooser.FILES_ONLY);
+            xmlFile = choosePath("Choose xml...", JFileChooser.FILES_ONLY);
             path = choosePath("Choose path...", JFileChooser.DIRECTORIES_ONLY);
             htmlFile = null;
 
