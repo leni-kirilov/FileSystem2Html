@@ -1,6 +1,6 @@
 package bg.kirilov.filesystem2html.model;
 
-import junit.framework.Assert;
+import org.junit.Assert;
 
 import java.io.File;
 import java.io.FileNotFoundException;
