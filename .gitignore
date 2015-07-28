@@ -7,5 +7,7 @@
 .project
 .classpath
 /temp.bg.kirilov.filesystem2html.utils.xml
-/.idea
+.idea
 *.iml
+*.ipr
+*.iws
