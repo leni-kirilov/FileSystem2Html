@@ -23,4 +23,9 @@ Try it!
 
 Just start the .jar file and follow the onscreen instructions
 
-###
+### HOW TO CONTRIBUTE
+
+1. Fork repo
+2. Make changes. If you are looking for ideas, check the `ISSUES` section in Github
+3. Create a Pull Request to the origin repo
+4. Congratulations!
