@@ -5,7 +5,7 @@
     <groupId>FileSystem2Html</groupId>
     <artifactId>FileSystem2Html</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2</version>
 
     <description>Exporting file system hierarchy to bg.kirilov.filesystem2html.utils.xml/html</description>
     <modules>

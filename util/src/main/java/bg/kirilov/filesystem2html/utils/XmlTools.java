@@ -22,8 +22,8 @@ import java.io.IOException;
  */
 public class XmlTools {
 
-    private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "bg.kirilov.filesystem2html.utils.xml/FileSystem2HTML.xsl";
-    private final static String FILE_SYSTEM_XSD_LOCATION = "bg.kirilov.filesystem2html.utils.xml/FileSystem.xsd";
+    private final static String FILE_SYSTEM_2_HTML_XSL_LOCATION = "FileSystem2HTML.xsl";
+    private final static String FILE_SYSTEM_XSD_LOCATION = "FileSystem.xsd";
 
     // TODO write tests for this Class as well - XMLTest of some sort
     public static void convertFileSystemXml2HTML(File inputXml, File resultHtml) {

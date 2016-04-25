@@ -19,6 +19,9 @@ import java.io.IOException;
 @SuppressWarnings("serial")
 public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
+    public static final String FILE_JPEG = "file.jpeg";
+    public static final String FOLDER_JPEG = "folder.jpeg";
+
     private File path;
     private File xmlFile;
     private File htmlFile;
@@ -271,20 +274,19 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
      * This is done so that the resulting html can easily refer the images with simple relative path.
      * better way to do this relative pointings
      */
-    //TODO refactor magic constants
     private void copyImageFiles() {
         String resultHtmlFolder = getDirectory(htmlFile);
-        FileUtils.copyFile(FileUtils.locateResource("images/file.jpeg"), new File(resultHtmlFolder + "file.jpeg"));
-        FileUtils.copyFile(FileUtils.locateResource("images/folder.jpeg"), new File(resultHtmlFolder + "folder.jpeg"));
+        FileUtils.copyFile(FileUtils.locateResource(FILE_JPEG), new File(resultHtmlFolder + FILE_JPEG));
+        FileUtils.copyFile(FileUtils.locateResource(FOLDER_JPEG), new File(resultHtmlFolder + FOLDER_JPEG));
     }
 
     private String getDirectory(File file) {
         String s = file.getAbsolutePath();
-        int index = s.lastIndexOf("\\");
-        return s.substring(0, index) + "\\";
+        int index = s.lastIndexOf(File.separator);
+        return s.substring(0, index) + File.separator;
     }
 
-    //TODO refactor magic constant 
+    //TODO refactor magic constant
     private void openFile(File file) {
         String osName = System.getProperty("os.name");
         if (osName.contains("Windows")) {

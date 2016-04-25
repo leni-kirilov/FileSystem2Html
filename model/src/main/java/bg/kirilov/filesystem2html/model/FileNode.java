@@ -137,7 +137,7 @@ public class FileNode extends FileSystemNode {
             this.isWritable = file.canWrite();
             this.isExecutable = file.canExecute();
         } else {
-            throw new FileSystemNodeCreationException("File doesn't exist!");
+            throw new FileSystemNodeCreationException("File " + file.getAbsolutePath() + " doesn't exist!");
         }
     }
 

@@ -1,6 +1,13 @@
 package bg.kirilov.filesystem2html.utils;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 
@@ -10,21 +17,12 @@ import java.net.URL;
 
 //TODO move images and helper bg.kirilov.filesystem2html.utils.xml and XSD files to /resources folder; aslo run.bat is not OK
 //TODO maven dependencies clear
-//TODO create maven master POM project and include modules: bg.kirilov.filesystem2html.model, utils, ui, (and tests for each one)
 //TODO cover with tests unless a better IO library is found
 public class FileUtils {
 
-    private static String MAIN_PACKAGE;
-
-    static {
-        String s = FileUtils.class.getCanonicalName().replace("", "/");
-        int len = FileUtils.class.getSimpleName().length();
-        MAIN_PACKAGE = s.substring(0, s.length() - len);
-    }
-
     public static File locateResource(String name) {
         try {
-            URL url = ClassLoader.getSystemResource(MAIN_PACKAGE + name);
+            URL url = ClassLoader.getSystemResource(name);
             return new File(url.toURI());
         } catch (URISyntaxException ex) {
             throw new RuntimeException("failed lookup", ex);
@@ -63,6 +61,7 @@ public class FileUtils {
         int numRead = 0;
 
         //skips first 2 rows of a bg.kirilov.filesystem2html.utils.xml
+        //TODO uglyyyy
         reader.readLine();
         reader.readLine();
         while ((numRead = reader.read(buf)) != -1) {
