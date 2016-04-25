@@ -5,7 +5,7 @@
     <parent>
         <artifactId>FileSystem2Html</artifactId>
         <groupId>FileSystem2Html</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.0.3</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
