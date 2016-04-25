@@ -29,3 +29,8 @@ Just start the .jar file and follow the onscreen instructions
 2. Make changes. If you are looking for ideas, check the `ISSUES` section in Github
 3. Create a Pull Request to the origin repo
 4. Congratulations!
+
+
+### Build status:
+
+[![Build Status](https://drone.io/github.com/leni-kirilov/FileSystem2Html/status.png)](https://drone.io/github.com/leni-kirilov/FileSystem2Html/latest)

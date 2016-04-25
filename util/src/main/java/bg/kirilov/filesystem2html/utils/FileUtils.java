@@ -90,7 +90,6 @@ public class FileUtils {
     }
   }
 
-  //TODO cover in tests
   private static void openLinuxStyle(File file) {
     try {
       Runtime.getRuntime().exec("open " + file.toString());
@@ -99,7 +98,6 @@ public class FileUtils {
     }
   }
 
-  //TODO cover in tests
   private static void openWindowsStyle(File file) {
     try {
       Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler \"" + file.toString() + "\"");
