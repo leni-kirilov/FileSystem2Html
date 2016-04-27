@@ -13,10 +13,10 @@ import java.io.IOException;
 /**
  * @author Leni Kirilov
  */
+//TODO i18n of messages
 //TODO write doc description for this class
 //TODO separate the panel's behaviour from the visualization - View-Controller style
 //TODO slowly but surely remove the auto-generated UI code.
-@SuppressWarnings("serial")
 public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
   public static final String FILE_JPEG = "file.jpeg";
@@ -27,6 +27,19 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
   private File htmlFile;
   private File currentBrowsingDirectory;
 
+  private javax.swing.JLabel chosenPathLabel;
+  private javax.swing.JLabel chosenPathLabelLabel;
+  private javax.swing.JButton createHtmlForPath;
+  private javax.swing.JButton createHtmlForXml;
+  private javax.swing.JButton createPathButton;
+  private javax.swing.JButton createXmlFromPathButton;
+  private javax.swing.JLabel htmlLabel;
+  private javax.swing.JButton openHtmlButton;
+  private javax.swing.JButton openXmlButton;
+  private javax.swing.JLabel resultHtmlLabelLabel;
+  private javax.swing.JLabel resultXmlPathLabelLabel; //TODO make it scrollable
+  private javax.swing.JLabel xmlPathLabel;
+
   public FileSystem2HTMLPanel() {
     //TODO improve Swing according to Swing best practises, so that Hanging of GUI because of calculations is fixed
     //TODO redo the Swing with code (may be never?)
@@ -34,7 +47,6 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     setEnableButtons(false, false);
   }
 
-  // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
     createXmlFromPathButton = new javax.swing.JButton();
@@ -163,15 +175,14 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
               .addComponent(createPathButton)))
           .addContainerGap())
     );
-  }// </editor-fold>//GEN-END:initComponents
+  }
 
-  private void createXmlFromPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createXmlFromPathButtonActionPerformed
+  private void createXmlFromPathButtonActionPerformed(java.awt.event.ActionEvent evt){
     try {
       path = choosePath("Choose path", JFileChooser.FILES_AND_DIRECTORIES);
       Element resultXml = createFileSystemNodeXML(path);
 
-      xmlFile = choosePath("Save to xml", JFileChooser.FILES_ONLY);
-      xmlFile = addSuffix(".xml", xmlFile);
+      xmlFile = choosePath("Save to xml", JFileChooser.FILES_ONLY, ".xml");
       XmlTools.writeFileSystemXmlToFile(resultXml, xmlFile);
 
       htmlFile = null;
@@ -179,16 +190,14 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
       setTextToLabels();
       setEnableButtons(true, false);
     } catch (IllegalArgumentException e) {
-      //TODO display some sort of notification to the user about an error
     }
-  }//GEN-LAST:event_createXmlFromPathButtonActionPerformed
+  }
 
-  private void createHtmlForXmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHtmlForXmlActionPerformed
+  private void createHtmlForXmlActionPerformed(java.awt.event.ActionEvent evt) {
     try {
       xmlFile = choosePath("Choose xml input", JFileChooser.FILES_ONLY);
       XmlTools.validateXml(xmlFile);
-      htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
-      htmlFile = addSuffix(".html", htmlFile);
+      htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY, ".html");
 
       XmlTools.convertFileSystemXml2HTML(xmlFile, htmlFile);
 
@@ -198,17 +207,15 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
       copyImageFiles();
     } catch (IllegalArgumentException e) {
-      //TODO display some sort of notification to the user about an error
     }
-  }//GEN-LAST:event_createHtmlForXmlActionPerformed
+  }
 
   //TODO refactor magic constants
-  private void createHtmlForPathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createHtmlForPathActionPerformed
+  private void createHtmlForPathActionPerformed(java.awt.event.ActionEvent evt) {
     try {
-      path = choosePath("Choose path", JFileChooser.FILES_AND_DIRECTORIES);
 
-      htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY);
-      htmlFile = addSuffix(".html", htmlFile);
+      path = choosePath("Choose path", JFileChooser.FILES_AND_DIRECTORIES);
+      htmlFile = choosePath("Save to html", JFileChooser.FILES_ONLY, ".html");
 
       Element resultXml = createFileSystemNodeXML(path);
 
@@ -223,13 +230,11 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
 
       copyImageFiles();
     } catch (IllegalArgumentException e) {
-      //TODO display some sort of notification to the user about an error
     }
-  }//GEN-LAST:event_createHtmlForPathActionPerformed
+  }
 
-  private void createPathButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createPathButtonActionPerformed
+  private void createPathButtonActionPerformed(java.awt.event.ActionEvent evt) {
     try {
-      //TODO i18n of messages
       xmlFile = choosePath("Choose xml...", JFileChooser.FILES_ONLY);
       path = choosePath("Choose path...", JFileChooser.DIRECTORIES_ONLY);
       htmlFile = null;
@@ -243,10 +248,9 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
       setEnableButtons(true, false);
 
     } catch (IllegalArgumentException | IOException e) {
-      //TODO i18n of messages
       JOptionPane.showMessageDialog(this, "Incorrect input. Files/dirs could not be created");
     }
-  }//GEN-LAST:event_createPathButtonActionPerformed
+  }
 
   private void setTextToLabels() {
     chosenPathLabel.setText(path != null ? path.getAbsolutePath() : "");
@@ -254,43 +258,36 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     htmlLabel.setText(htmlFile != null ? htmlFile.getAbsolutePath() : "");
   }
 
-  private File addSuffix(String suffix, File file) {
-    String path = file.getAbsolutePath();
-    if (!path.endsWith(suffix)) {
-      path += suffix;
-    }
-    return new File(path);
-  }
-
   /**
    * This is done so that the resulting html can easily refer the images with simple relative path.
    * better way to do this relative pointings
    */
   private void copyImageFiles() {
-    String resultHtmlFolder = getDirectory(htmlFile);
-    FileUtils.copyFile(FileUtils.locateResource(FILE_JPEG), new File(resultHtmlFolder + FILE_JPEG));
-    FileUtils.copyFile(FileUtils.locateResource(FOLDER_JPEG), new File(resultHtmlFolder + FOLDER_JPEG));
-  }
-
-  private String getDirectory(File file) {
-    String s = file.getAbsolutePath();
-    int index = s.lastIndexOf(File.separator);
-    return s.substring(0, index) + File.separator;
+    FileUtils.copyFile(FileUtils.locateResource(FILE_JPEG), new File(htmlFile.getParentFile(), FILE_JPEG));
+    FileUtils.copyFile(FileUtils.locateResource(FOLDER_JPEG), new File(htmlFile.getParentFile(), FOLDER_JPEG));
   }
 
   //TODO if a dir is chosen, check if it's a big dir. For example C:\; d:\ or "/" . Display a warning
   private File choosePath(String text, int chooseMode) throws IllegalArgumentException {
+    return choosePath(text, chooseMode, null);
+  }
+  private File choosePath(String text, int chooseMode, String suffix) throws IllegalArgumentException {
+
     JFileChooser fileChooser = new JFileChooser(this.currentBrowsingDirectory);
     fileChooser.setFileSelectionMode(chooseMode);
 
-    int result = fileChooser.showDialog(this, text);
-    if (result == JFileChooser.APPROVE_OPTION) {
-      this.currentBrowsingDirectory = fileChooser.getCurrentDirectory();
-      return fileChooser.getSelectedFile();
-    } else {
+    if (fileChooser.showDialog(this, text) != JFileChooser.APPROVE_OPTION) {
       JOptionPane.showMessageDialog(this, "You didn't select any file. Canceling operation...");
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException(); //TODO make this operate via a null value instead of exceptions
     }
+
+    this.currentBrowsingDirectory = fileChooser.getCurrentDirectory();
+    File selectedFile = fileChooser.getSelectedFile();
+    if(suffix != null){
+      selectedFile = FileUtils.addSuffix(suffix, selectedFile);
+    }
+
+    return selectedFile;
   }
 
   //TODO separate this complex computation in another thread so that the UI doesn't freeze !
@@ -303,22 +300,4 @@ public class FileSystem2HTMLPanel extends javax.swing.JPanel {
     openXmlButton.setEnabled(xml);
     openHtmlButton.setEnabled(html);
   }
-
-  //TODO move these variables declarations on the top
-  //TODO remove slowly auto-generated comments
-
-  // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JLabel chosenPathLabel;
-  private javax.swing.JLabel chosenPathLabelLabel;
-  private javax.swing.JButton createHtmlForPath;
-  private javax.swing.JButton createHtmlForXml;
-  private javax.swing.JButton createPathButton;
-  private javax.swing.JButton createXmlFromPathButton;
-  private javax.swing.JLabel htmlLabel;
-  private javax.swing.JButton openHtmlButton;
-  private javax.swing.JButton openXmlButton;
-  private javax.swing.JLabel resultHtmlLabelLabel;
-  private javax.swing.JLabel resultXmlPathLabelLabel; //TODO make it scrollable
-  private javax.swing.JLabel xmlPathLabel;
-  // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,9 @@
 #  CHANGELOG
 
+## 0.0.4
+- Moved file methods to FileUtils; Global version for all pom.xml files set
+
+
 ## 0.0.3
 - Moved file methods to FileUtils
 

@@ -5,13 +5,14 @@
     <parent>
         <artifactId>FileSystem2Html</artifactId>
         <groupId>FileSystem2Html</groupId>
-        <version>0.0.3</version>
+        <version>${global.version}</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <packaging>jar</packaging>
     <artifactId>filesystem2html-model</artifactId>
-    <version>${parent.version}</version>
+    <version>${project.parent.version}</version>
 
     <build>
         <plugins>

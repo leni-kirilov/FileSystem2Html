@@ -22,7 +22,6 @@ public class FileUtils {
 
   public static final String OS_NAME_SYSTEM_PROPERTY_NAME = "os.name";
   public static final String WINDOWS = "Windows";
-  public static final String MAC_OS_X = "Mac";
 
   public static File locateResource(String name) {
     try {
@@ -36,9 +35,6 @@ public class FileUtils {
   //TODO search of a better IO library to include in the project.
   public static void copyFile(File sourceFile, File destinationFile) {
     try {
-      System.out.println("sourceFile= " + sourceFile.getAbsolutePath());
-      System.out.println("destinationFile= " + destinationFile.getAbsolutePath());
-
       InputStream in = new FileInputStream(sourceFile);
       OutputStream out = new FileOutputStream(destinationFile);
 
@@ -50,7 +46,7 @@ public class FileUtils {
       in.close();
       out.close();
     } catch (IOException ex) {
-      throw new RuntimeException("Copy of files failed", ex); //TODO add better description here. Which files. What exception
+      throw new RuntimeException("Copy of file" + sourceFile.getAbsolutePath() + " to location " + destinationFile.getAbsolutePath() + " failed", ex);
     }
   }
 
@@ -79,13 +75,12 @@ public class FileUtils {
     return fileData.toString().replace("\n</FileSystemTree>", "");
   }
 
-  //TODO cover in tests
   public static void openFile(File file) {
     String osName = System.getProperty(OS_NAME_SYSTEM_PROPERTY_NAME);
     if (osName.contains(WINDOWS)) {
       openWindowsStyle(file);
 
-    } else if (osName.contains(MAC_OS_X)) {
+    } else {
       openLinuxStyle(file);
     }
   }
@@ -105,5 +100,13 @@ public class FileUtils {
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  public static File addSuffix(String suffix, File file) {
+    String path = file.getAbsolutePath();
+    if (!path.endsWith(suffix)) {
+      path += suffix;
+    }
+    return new File(path);
   }
 }
