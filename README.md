@@ -34,3 +34,4 @@ Just start the .jar file and follow the onscreen instructions
 ### Build status:
 
 [![Build Status](https://drone.io/github.com/leni-kirilov/FileSystem2Html/status.png)](https://drone.io/github.com/leni-kirilov/FileSystem2Html/latest)
+[![Coverage Status](https://coveralls.io/repos/github/leni-kirilov/FileSystem2Html/badge.svg?branch=master)](https://coveralls.io/github/leni-kirilov/FileSystem2Html?branch=master)
