@@ -2,7 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
   <properties>
-    <global.version>0.0.4</global.version>
+    <global.version>0.0.5</global.version>
+
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -44,7 +45,7 @@
 
       <plugin>
         <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
+          <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.7.1.201405082137</version>
         <executions>
           <execution>
@@ -62,6 +63,7 @@
         <version>2.2.0</version>
         <configuration>
           <repoToken>IPpxuZpUtXJmgVlANlVjBHUDZN08UPrRV</repoToken>
+          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>
