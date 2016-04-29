@@ -3,4 +3,19 @@ language: java
 jdk:
   - oraclejdk8
 
+env:
+  global:
+   # The next declration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+   - secure: "d2WWHn0XS0Xz8cuzKCDPlYR6FdB/bLSz44asgl15rU69Gqi8qvOubpyDC1bB+Kq9VrhLPgdaFeoAbSE9wSAEjQcpGWWsOJMY1kG53o/+vNhCRjidEWeKebFd5PRB+cQ/QKpYFJqKyyXpsvFmH8r6QwF35GGgm9gVTkopgS34rmg="
+
 after_success: mvn clean test jacoco:report coveralls:jacoco
+
+addons:
+  coverity_scan:
+    project:
+      name: "leni-kirilov/FileSystem2Html"
+      description: "Creates HTML representation of a selected folder of your filesystem"
+    notification_email: leni.kirilov+github@gmail.com
+    build_command: "mvn clean package"
+    branch_pattern: coverity_scan

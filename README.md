@@ -35,3 +35,7 @@ Just start the .jar file and follow the onscreen instructions
 
 [![Build Status](https://drone.io/github.com/leni-kirilov/FileSystem2Html/status.png)](https://drone.io/github.com/leni-kirilov/FileSystem2Html/latest)
 [![Coverage Status](https://coveralls.io/repos/github/leni-kirilov/FileSystem2Html/badge.svg?branch=master)](https://coveralls.io/github/leni-kirilov/FileSystem2Html?branch=master)
+<a href="https://scan.coverity.com/projects/leni-kirilov-filesystem2html">
+  <img alt="Coverity Scan Build Status"
+       src="https://img.shields.io/coverity/scan/8707.svg"/>
+</a>
