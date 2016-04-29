@@ -18,4 +18,4 @@ addons:
       description: "Creates HTML representation of a selected folder of your filesystem"
     notification_email: leni.kirilov+github@gmail.com
     build_command: "mvn clean package"
-    branch_pattern: coverity_scan
+    branch_pattern: master
