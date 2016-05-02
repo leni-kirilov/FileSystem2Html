@@ -42,7 +42,7 @@ Just start the .jar file and follow the onscreen instructions
 
 
 ### Licence
-Copyright [2016] [Leni Kirilov]
+Copyright 2016 Leni Kirilov
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
